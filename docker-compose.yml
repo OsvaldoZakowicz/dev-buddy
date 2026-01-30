@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    container_name: dev-buddy-web
+    ports:
+      - "127.0.0.1:9092:8000"
+    volumes:
+      -.:/var/www/html
+    env_file:
+      - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    stdin_open: true
+    tty: true
