@@ -1,5 +1,5 @@
 :root {
-    /* paleta deepsea de coolors.co*/
+    /* paleta deepsea de coolors.co */
     --deepsea-color-dark: #0d1321;
     --deepsea-color-mid-1: #1d2d44;
     --deepsea-color-mid-2: #3e5c76;
@@ -14,66 +14,134 @@
     padding: 0;
 }
 
+body {
+    background-color: var(--deepsea-color-dark);
+    color: var(--deepsea-color-white);
+    height: 100vh;
+    overflow: hidden;
+}
+
 .container {
     width: 100%;
-    height: auto;
+    height: 100vh;
     padding: 2rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     gap: 1rem;
 }
 
-.title-content,
+.title-content {
+    min-width: 400px;
+    max-width: 650px;
+    width: 100%;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.title-content h1 {
+    margin: 0.5rem;
+    text-transform: lowercase;
+    letter-spacing: 2px;
+    color: var(--deepsea-color-white);
+    font-size: 2rem;
+}
+
+.title-content span {
+    margin: 0.5rem;
+    color: var(--deepsea-color-mid-3);
+    font-size: 0.9rem;
+}
+
+.title-content p {
+    margin-top: 0.5rem;
+    color: var(--deepsea-color-mid-2);
+    font-size: 0.8rem;
+}
+
 .chat-content {
     min-width: 400px;
     max-width: 650px;
-}
-
-.title-content {
-    height: 15%;
-    text-align: center;
-}
-
-.title-content h1, span {
-    margin: 0.5rem;
-    text-transform: capitalize;
-    letter-spacing: 1px;
-}
-
-.chat-content {
-    height: 85%;
+    width: 100%;
+    flex: 1;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 1rem;
+    overflow: hidden;
+}
+
+.chat-content form {
+    flex-shrink: 0;
 }
 
 .chat-input {
     width: 100%;
-    padding: 0.5rem;
+    min-height: 80px;
+    padding: 1rem;
+    background-color: var(--deepsea-color-mid-1);
+    color: var(--deepsea-color-white);
+    border: 2px solid var(--deepsea-color-mid-2);
+    border-radius: 8px;
+    resize: vertical;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.chat-input:focus {
+    outline: none;
+    border-color: var(--deepsea-color-mid-3);
 }
 
 .chat-output {
-    max-height: 500px;
+    flex: 1;
     overflow-x: hidden;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    border: 1px solid black;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--deepsea-color-mid-1);
+    border: 1px solid var(--deepsea-color-mid-2);
+    border-radius: 8px;
+}
+
+/* scrollbar personalizado */
+.chat-output::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-output::-webkit-scrollbar-track {
+    background: var(--deepsea-color-dark);
+    border-radius: 4px;
+}
+
+.chat-output::-webkit-scrollbar-thumb {
+    background: var(--deepsea-color-mid-2);
+    border-radius: 4px;
+}
+
+.chat-output::-webkit-scrollbar-thumb:hover {
+    background: var(--deepsea-color-mid-3);
 }
 
 .question {
     align-self: flex-end;
-    width: 90%;
-    padding: 5px;
-    background-color: lightgreen;
+    max-width: 85%;
+    padding: 0.75rem 1rem;
+    background-color: var(--deepsea-color-mid-2);
+    color: var(--deepsea-color-white);
+    border-radius: 12px 12px 4px 12px;
+    line-height: 1.6;
+    word-wrap: break-word;
 }
 
 .answer {
-    width: 90%;
-    padding: 5px;
-    background-color: lightgray;
+    align-self: flex-start;
+    max-width: 85%;
+    padding: 0.75rem 1rem;
+    background-color: var(--deepsea-color-mid-3);
+    color: var(--deepsea-color-dark);
+    border-radius: 12px 12px 12px 4px;
+    line-height: 1.6;
+    word-wrap: break-word;
 }

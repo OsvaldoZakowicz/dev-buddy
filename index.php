@@ -26,14 +26,7 @@
                 <textarea class="chat-input" name="" id=""></textarea>
             </form>
             <!-- output -->
-            <section class="chat-output">
-                <p class="question">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quidem nihil recusandae illum? Ratione molestias enim expedita quo, dolorem, minus sequi magnam sit repellendus officia, cupiditate aliquam excepturi nihil quas.</p>
-                <p class="answer">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quidem nihil recusandae illum? Ratione molestias enim expedita quo, dolorem, minus sequi magnam sit repellendus officia, cupiditate aliquam excepturi nihil quas.</p>
-                <p class="question">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quidem nihil recusandae illum? Ratione molestias enim expedita quo, dolorem, minus sequi magnam sit repellendus officia, cupiditate aliquam excepturi nihil quas.</p>
-                <p class="answer">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quidem nihil recusandae illum? Ratione molestias enim expedita quo, dolorem, minus sequi magnam sit repellendus officia, cupiditate aliquam excepturi nihil quas.</p>
-                <p class="question">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quidem nihil recusandae illum? Ratione molestias enim expedita quo, dolorem, minus sequi magnam sit repellendus officia, cupiditate aliquam excepturi nihil quas.</p>
-                <p class="answer">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quidem nihil recusandae illum? Ratione molestias enim expedita quo, dolorem, minus sequi magnam sit repellendus officia, cupiditate aliquam excepturi nihil quas.</p>
-            </section>
+            <section class="chat-output"></section>
         </section>
     </main>
 </body>
