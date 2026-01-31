@@ -1,6 +1,7 @@
 // elementos del dom
 const chatForm = document.querySelector('.chat-content form');
 const chatInput = document.querySelector('.chat-input');
+const chatBtnSend = document.querySelector('.btn-send');
 const chatOutput = document.querySelector('.chat-output');
 
 // prevenir submit default y manejar envio
@@ -15,6 +16,12 @@ chatInput.addEventListener('keydown', async (e) => {
     e.preventDefault();
     await sendMessage();
   }
+});
+
+// submit con boton de envio
+chatBtnSend.addEventListener('click', async (e) => {
+  e.preventDefault();
+  await sendMessage();
 });
 
 // funcion principal para enviar mensaje

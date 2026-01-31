@@ -81,15 +81,47 @@ body {
   background-color: var(--deepsea-color-mid-1);
   color: var(--deepsea-color-white);
   border: 2px solid var(--deepsea-color-mid-2);
-  border-radius: 8px;
+  border-radius: 4px;
   resize: vertical;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   line-height: 1.5;
 }
 
 .chat-input:focus {
   outline: none;
   border-color: var(--deepsea-color-mid-3);
+}
+
+/* seccion inferior al textarea para prompt */
+.chat-controls {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 0.5rem 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+  border-radius: 4px;
+}
+
+.btn-send {
+  color: var(--deepsea-color-dark);
+  background-color: var(--deepsea-color-white);
+  border: 2px solid var(--deepsea-color-mid-2);
+}
+
+.btn-send:hover {
+  background-color: var(--deepsea-color-mid-3);
+}
+
+.btn-send:active {
+  background-color: var(--deepsea-color-mid-2);
 }
 
 .chat-output {
@@ -145,8 +177,6 @@ body {
   line-height: 1.6;
   word-wrap: break-word;
 }
-
-/* agregar al final del archivo */
 
 .loading {
   font-style: italic;
