@@ -1,14 +1,28 @@
 services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: dev-buddy-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    restart: unless-stopped
+
   web:
     build: .
     container_name: dev-buddy-web
     ports:
-      - "127.0.0.1:9092:8000"
+      - "9092:8000"
     volumes:
       - .:/var/www/html
     env_file:
       - .env
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    depends_on:
+      - ollama
     stdin_open: true
     tty: true
+    restart: unless-stopped
+
+volumes:
+  ollama-data:
+    driver: local
