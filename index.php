@@ -15,28 +15,24 @@
 
 <body>
   <main class="container">
+    <!-- titulo -->
     <section class="title-content">
-      <h1>DevBuddy</h1>
-      <span>Tu compañero de programaci&oacute;n!</span>
+      <h1 class="title">DevBuddy</h1>
+      <span class="subtitle">Tu compañero de programaci&oacute;n!</span>
     </section>
-    <section class="chat-content">
-      <!-- output -->
-      <section class="chat-output chat-output--active"></section>
-      <!-- input -->
-      <form>
-        <textarea
-          class="chat-input"
-          placeholder="¿C&oacute;mo puedo ayudarte hoy?"
-          rows="3">
-                </textarea>
-        <div class="chat-controls">
-          <button class="btn btn-send">
-            enviar
-            <img src="./assets/icons/send.svg" alt="" width="16px" height="16px">
-          </button>
-        </div>
-      </form>
-    </section>
+    <!-- contenido de chat, salida del prompt -->
+    <section class="chat-output"></section>
+    <!-- entrada de prompt -->
+    <form class="chat-form">
+      <textarea class="chat-input" placeholder="¿C&oacute;mo puedo ayudarte hoy?" rows="2">
+      </textarea>
+      <div class="chat-controls">
+        <button class="btn btn-send">
+          enviar
+          <img src="./assets/icons/send.svg" alt="" width="16px" height="16px">
+        </button>
+      </div>
+    </form>
   </main>
 
   <!-- scripts -->
