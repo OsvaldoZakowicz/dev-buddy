@@ -1,5 +1,5 @@
 // elementos del dom
-const chatForm = document.querySelector('.chat-content form');
+const chatForm = document.querySelector('.chat-form');
 const chatInput = document.querySelector('.chat-input');
 const chatBtnSend = document.querySelector('.btn-send');
 const chatOutput = document.querySelector('.chat-output');
@@ -30,6 +30,8 @@ async function sendMessage() {
 
   // validar input vacio
   if (!prompt) return;
+
+  showChat();
 
   // agregar pregunta al chat
   addMessage(prompt, 'question');
@@ -65,6 +67,15 @@ async function sendMessage() {
     removeMessage(loadingId);
     addMessage(`error de conexion: ${error.message}`, 'answer error');
   }
+}
+
+// mostrar chat por primera vez
+function showChat() {
+  if (chatOutput.classList.contains('chat-output--active')) {
+    return;
+  }
+
+  chatOutput.classList.add('chat-output--active');
 }
 
 // agregar mensaje al chat
