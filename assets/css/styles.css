@@ -153,22 +153,24 @@ body {
 .question {
   align-self: flex-end;
   max-width: 85%;
-  padding: 0.75rem 1rem;
+  padding: 0.55rem 0.75rem;
   background-color: var(--deepsea-color-mid-2);
   color: var(--deepsea-color-white);
-  border-radius: 12px 12px 4px 12px;
-  line-height: 1.6;
+  border-radius: 8px 8px 4px 8px;
+  font-size: 0.85rem;
+  line-height: 1.5;
   word-wrap: break-word;
 }
 
 .answer {
   align-self: flex-start;
   max-width: 85%;
-  padding: 0.75rem 1rem;
+  padding: 0.55rem 0.75rem;
   background-color: var(--deepsea-color-mid-3);
   color: var(--deepsea-color-dark);
-  border-radius: 12px 12px 12px 4px;
-  line-height: 1.6;
+  border-radius: 8px 8px 8px 4px;
+  font-size: 0.85rem;
+  line-height: 1.5;
   word-wrap: break-word;
 }
 
@@ -191,4 +193,87 @@ body {
 .error {
   background-color: #d32f2f !important;
   color: white !important;
+}
+
+/* parrafos dentro de mensajes */
+.answer p,
+.question p {
+  margin: 0;
+  margin-bottom: 0.75rem;
+}
+
+.answer p:last-child,
+.question p:last-child {
+  margin-bottom: 0;
+}
+
+/* codigo inline */
+.answer code,
+.question code {
+  font-family: 'JetBrains Mono', monospace;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.15rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.85rem;
+}
+
+.question code {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: var(--deepsea-color-white);
+}
+
+/* bloques de codigo dentro de mensajes */
+.answer pre,
+.question pre {
+  background-color: var(--deepsea-color-dark);
+  color: var(--deepsea-color-white);
+  padding: 0.875rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.answer pre:first-child,
+.question pre:first-child {
+  margin-top: 0;
+}
+
+.answer pre:last-child,
+.question pre:last-child {
+  margin-bottom: 0;
+}
+
+/* codigo dentro de pre */
+.answer pre code,
+.question pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* scrollbar en bloques de codigo */
+.answer pre::-webkit-scrollbar,
+.question pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+.answer pre::-webkit-scrollbar-track,
+.question pre::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.answer pre::-webkit-scrollbar-thumb,
+.question pre::-webkit-scrollbar-thumb {
+  background: var(--deepsea-color-mid-2);
+  border-radius: 3px;
+}
+
+.answer pre::-webkit-scrollbar-thumb:hover,
+.question pre::-webkit-scrollbar-thumb:hover {
+  background: var(--deepsea-color-mid-3);
 }

@@ -24,8 +24,7 @@
     <section class="chat-output"></section>
     <!-- entrada de prompt -->
     <form class="chat-form">
-      <textarea class="chat-input" placeholder="¿C&oacute;mo puedo ayudarte hoy?" rows="2">
-      </textarea>
+      <textarea class="chat-input" placeholder="¿C&oacute;mo puedo ayudarte hoy?" rows="2"></textarea>
       <div class="chat-controls">
         <button class="btn btn-send">
           enviar
