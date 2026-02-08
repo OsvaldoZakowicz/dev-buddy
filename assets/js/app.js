@@ -1,4 +1,19 @@
 import { parseMarkdownToHtml } from './mdParser.js';
+import {
+  activateChat,
+  scrollToBottom,
+  clearInput,
+  addMsgToChat,
+} from './domControl.js';
+
+// parametros constantes
+const API = '/api/chat.php';
+const CHAT_ACTIVE_CLASS = 'chat-output--active';
+const QUESTION_CLASS = 'question';
+const ANSWER_CLASS = 'answer';
+const ANSWER_ERROR_CLASS = 'answer error';
+const LOADING_CLASS = 'loading';
+const LOADING_TEXT = 'chambeando ...';
 
 // elementos del dom
 const chatForm = document.querySelector('.chat-form');
@@ -33,18 +48,18 @@ async function sendMessage() {
   // validar input vacio
   if (!prompt) return;
 
-  // mostrar chat
-  showChat();
+  // activar chat
+  activateChat(chatOutput, CHAT_ACTIVE_CLASS);
 
   // agregar pregunta al chat
-  addQuestionToChat(prompt, 'question');
+  addQuestionToChat(prompt);
 
   // mostrar indicador de carga
-  const loadingId = addLoadingMsgToChat('pensando ...', 'answer');
+  const loadingId = addLoadingMsgToChat();
 
   try {
     // llamar a la api
-    const response = await fetch('/api/chat.php', {
+    const response = await fetch(API, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -59,75 +74,56 @@ async function sendMessage() {
 
     // manejar respuesta
     if (data.success) {
-      addAnswerToChat(data.data, 'answer');
+      addAnswerToChat(data.data, ANSWER_CLASS);
     } else {
-      addErrorMsgToChat(`error: ${data.error}`, 'answer error');
+      addErrorMsgToChat(`error: ${data.error}`, ANSWER_ERROR_CLASS);
     }
   } catch (error) {
     removeLoadingMsgFromChat(loadingId);
-    addErrorMsgToChat(`error de conexion: ${error.message}`, 'answer error');
+    addErrorMsgToChat(
+      `error de conexion: ${error.message}`,
+      ANSWER_ERROR_CLASS,
+    );
   }
-}
-
-// mostrar chat por primera vez
-function showChat() {
-  if (chatOutput.classList.contains('chat-output--active')) {
-    return;
-  }
-
-  chatOutput.classList.add('chat-output--active');
 }
 
 /**
  * agregar prompt realizado por el usuario
- * @param {*} question prompt del usuario
- * @param {*} className clase a incluir en el elemento html representativo del mensaje
+ * @param {string} question prompt del usuario
  */
-function addQuestionToChat(question, className) {
-  const messageElement = document.createElement('div');
-  messageElement.className = className;
-  messageElement.textContent = question;
-  chatOutput.appendChild(messageElement);
-  scrollToBottom();
-  clearInput();
+function addQuestionToChat(question) {
+  addMsgToChat(chatOutput, question, QUESTION_CLASS);
+  clearInput(chatInput);
 }
 
 /**
  * agregar respuesta del modelo IA al chat
  * @param {*} answer respuesta del modelo
- * @param {*} className clase a incluir en el elemento html representativo del mensaje
  */
-function addAnswerToChat(answer, className) {
-  const messageElement = document.createElement('div');
-  messageElement.className = className;
-  messageElement.appendChild(parseMarkdownToHtml(answer));
-  chatOutput.appendChild(messageElement);
-  scrollToBottom();
-}
-
-function addErrorMsgToChat(errorText, className) {
-  const messageElement = document.createElement('div');
-  messageElement.className = className;
-  messageElement.textContent = errorText;
-  chatOutput.appendChild(messageElement);
-  scrollToBottom();
+function addAnswerToChat(answer) {
+  const fragment = parseMarkdownToHtml(answer);
+  addMsgToChat(chatOutput, fragment, ANSWER_CLASS, { isFragment: true });
 }
 
 /**
- * agregar un mensaje de carga al chat mientras se envia el prompt al modelo
- * @param {*} loadingText texto a mostrar en el mensaje
- * @param {*} className clase a incluir en el elemento html representativo del mensaje
+ * agrega un mensaje de error al chat
+ * @param {string} errorText
+ */
+function addErrorMsgToChat(errorText) {
+  addMsgToChat(chatOutput, errorText, ANSWER_ERROR_CLASS);
+}
+
+/**
+ * agrega un mensaje de carga al chat mientras se envia el prompt al modelo
  * @returns id del mensaje de carga
  */
-function addLoadingMsgToChat(loadingText, className) {
-  const messageElement = document.createElement('div');
-  messageElement.className = className;
-  messageElement.textContent = loadingText;
+function addLoadingMsgToChat() {
   const id = `loading-${Date.now()}`;
-  messageElement.id = id;
-  messageElement.classList.add('loading');
-  chatOutput.appendChild(messageElement);
-  return messageElement.id;
+  return addMsgToChat(chatOutput, LOADING_TEXT, ANSWER_CLASS, {
+    id,
+    isLoading: true,
+    loadingClass: LOADING_CLASS,
+  });
 }
 
 // remover mensaje por id
@@ -135,19 +131,4 @@ function removeLoadingMsgFromChat(id) {
   if (!id) return;
   const el = document.getElementById(id);
   if (el) el.remove();
-}
-
-// scroll automatico al ultimo mensaje
-function scrollToBottom() {
-  chatOutput.scrollTop = chatOutput.scrollHeight;
-}
-
-// limpiar input
-function clearInput() {
-  chatInput.value = '';
-}
-
-// limpiar chat (opcional, para usar despues)
-function clearChat() {
-  chatOutput.innerHTML = '';
 }
