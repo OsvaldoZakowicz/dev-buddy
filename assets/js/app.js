@@ -1,3 +1,5 @@
+import { parseMarkdownToHtml } from './mdParser.js';
+
 // elementos del dom
 const chatForm = document.querySelector('.chat-form');
 const chatInput = document.querySelector('.chat-input');
@@ -148,101 +150,4 @@ function clearInput() {
 // limpiar chat (opcional, para usar despues)
 function clearChat() {
   chatOutput.innerHTML = '';
-}
-
-// ============================================
-// parser de markdown para respuestas del modelo
-// ============================================
-
-/**
- * parsea texto markdown y retorna fragment con nodos dom
- * @param {string} text - texto en formato markdown
- * @returns {DocumentFragment} fragment con nodos html
- */
-function parseMarkdownToHtml(text) {
-  if (!text) return document.createDocumentFragment();
-
-  const fragment = document.createDocumentFragment();
-  const lines = text.split('\n');
-  let i = 0;
-
-  while (i < lines.length) {
-    const line = lines[i];
-
-    // detectar inicio de bloque de codigo
-    if (line.trim().startsWith('```')) {
-      const codeBlock = extractCodeBlock(lines, i);
-      fragment.appendChild(codeBlock.element);
-      i = codeBlock.nextIndex;
-      continue;
-    }
-
-    // procesar linea normal (puede contener codigo inline)
-    const processedLine = processInlineCode(line);
-
-    // solo agregar parrafos si la linea no esta vacia
-    if (processedLine.trim()) {
-      const p = document.createElement('p');
-      p.innerHTML = processedLine;
-      fragment.appendChild(p);
-    }
-
-    i++;
-  }
-
-  return fragment;
-}
-
-/**
- * extrae un bloque de codigo completo
- * @param {array} lines - array de lineas del texto
- * @param {number} startIndex - indice donde inicia el bloque
- * @returns {object} objeto con elemento dom y siguiente indice
- */
-function extractCodeBlock(lines, startIndex) {
-  const firstLine = lines[startIndex].trim();
-  const language = firstLine.replace('```', '').trim() || 'code';
-
-  let codeLines = [];
-  let i = startIndex + 1;
-
-  // buscar el cierre del bloque de codigo
-  while (i < lines.length) {
-    if (lines[i].trim() === '```') {
-      break;
-    }
-    codeLines.push(lines[i]);
-    i++;
-  }
-
-  const codeContent = codeLines.join('\n');
-
-  // crear elementos dom
-  const pre = document.createElement('pre');
-  const code = document.createElement('code');
-  code.className = `language-${language}`;
-  code.textContent = codeContent;
-  pre.appendChild(code);
-
-  return {
-    element: pre,
-    nextIndex: i + 1,
-  };
-}
-
-/**
- * procesa codigo inline dentro de una linea
- * @param {string} line - linea de texto
- * @returns {string} linea con codigo inline convertido a html
- */
-function processInlineCode(line) {
-  // crear un div temporal para escapar el texto
-  const temp = document.createElement('div');
-  temp.textContent = line;
-  let escaped = temp.innerHTML;
-
-  // convertir codigo inline `codigo` a <code>codigo</code>
-  escaped = escaped.replace(/`([^`]+)`/g, '<code>$1</code>');
-
-  return escaped;
 }
