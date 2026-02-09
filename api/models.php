@@ -24,10 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 // NOTA: __DIR__ es variable magica que contiene el directorio actual
 $config = require __DIR__ . '/../config/ollama.php';
 
-// debug: verificar configuracion
-// visible en docker logs
-error_log("Fetching models from: " . $config['base_url']);
-
 // construir url para listar modelos
 $url = $config['base_url'] . $config['endpoints']['tags'];
 

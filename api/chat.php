@@ -55,26 +55,23 @@ $context = stream_context_create([
     ]
 ]);
 
-// llamar a ollama
 try {
+    // llamar a ollama
     $url = $config['base_url'] . $config['endpoints']['generate'];
-    error_log("Calling: " . $url);
 
     $response = @file_get_contents($url, false, $context);
 
-    // debug: ver response completo
-    error_log("Response: " . ($response === false ? 'FALSE' : $response));
-    error_log("HTTP Response Headers: " . print_r($http_response_header ?? [], true));
-
     if ($response === false) {
         $error = error_get_last();
+        error_log("error al conectar con ollama: " . ($error['message'] ?? 'unknown'));
         throw new Exception('error al conectar con ollama: ' . ($error['message'] ?? 'unknown'));
     }
 
     $result = json_decode($response, true);
 
     if (!isset($result['response'])) {
-        throw new Exception('respuesta invalida de ollama: ' . json_encode($result));
+        error_log("respuesta invalida desde ollama: " . $response);
+        throw new Exception('respuesta invalida desde ollama: ' . json_encode($response));
     }
 
     // respuesta exitosa
