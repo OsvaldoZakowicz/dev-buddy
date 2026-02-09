@@ -94,6 +94,7 @@ body {
   min-width: 400px;
   max-width: 950px;
   width: 100%;
+  padding: 0.5rem;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   background-color: var(--deepsea-color-mid-1);
@@ -121,8 +122,9 @@ body {
 /* seccion inferior al textarea para prompt */
 .chat-controls {
   display: flex;
-  flex-direction: row-reverse;
-  padding: 0.5rem 1rem;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 0.5rem;
 }
 
 .btn {
@@ -148,6 +150,38 @@ body {
 
 .btn-send:active {
   background-color: var(--deepsea-color-mid-2);
+}
+
+/* select de modelos */
+.model-selector {
+  min-width: 200px;
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  border-radius: 4px;
+  color: var(--deepsea-color-white);
+  background-color: var(--deepsea-color-mid-1);
+  border: 1px solid var(--deepsea-color-mid-2);
+  cursor: pointer;
+}
+
+.model-selector:hover:not(:disabled) {
+  border-color: var(--deepsea-color-mid-3);
+}
+
+.model-selector:focus {
+  outline: none;
+  border-color: var(--deepsea-color-mid-3);
+}
+
+.model-selector:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* opciones del select (algunos navegadores lo permiten) */
+.model-selector option {
+  background-color: var(--deepsea-color-mid-1);
+  color: var(--deepsea-color-white);
 }
 
 .question {

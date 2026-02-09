@@ -6,8 +6,11 @@ import {
   addMsgToChat,
 } from './domControl.js';
 
-// parametros constantes
+// API
 const API = '/api/chat.php';
+const API_MODELS = '/api/models.php';
+
+// parametros constantes
 const CHAT_ACTIVE_CLASS = 'chat-output--active';
 const QUESTION_CLASS = 'question';
 const ANSWER_CLASS = 'answer';
@@ -20,6 +23,7 @@ const chatForm = document.querySelector('.chat-form');
 const chatInput = document.querySelector('.chat-input');
 const chatBtnSend = document.querySelector('.btn-send');
 const chatOutput = document.querySelector('.chat-output');
+const modelSelector = document.getElementById('model-selector');
 
 // prevenir submit default y manejar envio
 chatForm.addEventListener('submit', async (e) => {
@@ -40,6 +44,56 @@ chatBtnSend.addEventListener('click', async (e) => {
   e.preventDefault();
   await sendMessage();
 });
+
+/**
+ * carga la lista de modelos disponibles desde ollama
+ * y popula el select
+ * * ver listener al final del archivo
+ */
+async function loadModels() {
+  try {
+    // fetch() a models.php
+    // Response {status: 200, headers: {...}, body: {...} ...}
+    const response = await fetch(API_MODELS);
+
+    // procesamos a json
+    // {success: true, models: [...]}
+    const data = await response.json();
+
+    if (!data.success || data.models.length === 0) {
+      // no hay modelos disponibles
+      modelSelector.innerHTML =
+        '<option value="">no hay modelos disponibles en ollama</option>';
+      modelSelector.disabled = true;
+      return;
+    }
+
+    // limpiar select
+    modelSelector.innerHTML = '';
+
+    // agregar modelos al select como opciones
+    data.models.forEach((model) => {
+      const option = document.createElement('option');
+      option.value = model.name;
+
+      let displayText = model.name;
+      if (model.parameter_size && model.quantization_level) {
+        displayText = `${model.name} (${model.parameter_size}, ${model.quantization_level})`;
+      }
+
+      option.textContent = displayText;
+      modelSelector.appendChild(option);
+    });
+
+    // habilitar select
+    modelSelector.disabled = false;
+  } catch (error) {
+    console.error('error cargando modelos:', error);
+    modelSelector.innerHTML =
+      '<option value="">error al cargar modelos</option>';
+    modelSelector.disabled = true;
+  }
+}
 
 // funcion principal para enviar mensaje
 async function sendMessage() {
@@ -132,3 +186,8 @@ function removeLoadingMsgFromChat(id) {
   const el = document.getElementById(id);
   if (el) el.remove();
 }
+
+// documento cargado y listo para obtener modelos
+document.addEventListener('DOMContentLoaded', () => {
+  loadModels();
+});

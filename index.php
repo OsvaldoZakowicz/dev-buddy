@@ -26,6 +26,10 @@
     <form class="chat-form">
       <textarea class="chat-input" placeholder="¿C&oacute;mo puedo ayudarte hoy?" rows="2"></textarea>
       <div class="chat-controls">
+        <!-- select de modelos aqui -->
+        <select class="model-selector" id="model-selector" disabled>
+          <option value="">cargando modelos...</option>
+        </select>
         <button class="btn btn-send">
           enviar
           <img src="./assets/icons/send.svg" alt="" width="16px" height="16px">
