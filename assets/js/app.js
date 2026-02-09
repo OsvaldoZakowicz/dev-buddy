@@ -45,6 +45,11 @@ chatBtnSend.addEventListener('click', async (e) => {
   await sendMessage();
 });
 
+// documento cargado y listo para obtener modelos
+document.addEventListener('DOMContentLoaded', () => {
+  loadModels();
+});
+
 /**
  * carga la lista de modelos disponibles desde ollama
  * y popula el select
@@ -95,7 +100,10 @@ async function loadModels() {
   }
 }
 
-// funcion principal para enviar mensaje
+/**
+ * funcion principal para enviar prompts a modelo
+ * y retornar respuesta en formato html
+ */
 async function sendMessage() {
   const prompt = chatInput.value.trim();
 
@@ -186,8 +194,3 @@ function removeLoadingMsgFromChat(id) {
   const el = document.getElementById(id);
   if (el) el.remove();
 }
-
-// documento cargado y listo para obtener modelos
-document.addEventListener('DOMContentLoaded', () => {
-  loadModels();
-});
