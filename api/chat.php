@@ -57,7 +57,7 @@ $context = stream_context_create([
 
 // llamar a ollama
 try {
-    $url = $config['base_url'] . $config['endpoint'];
+    $url = $config['base_url'] . $config['endpoints']['generate'];
     error_log("Calling: " . $url);
 
     $response = @file_get_contents($url, false, $context);
