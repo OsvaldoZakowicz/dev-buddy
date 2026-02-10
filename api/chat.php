@@ -22,11 +22,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 // cargar configuracion
 $config = require __DIR__ . '/../config/ollama.php';
 
-// debug: verificar configuracion
-error_log("OLLAMA_URL: " . $config['base_url']);
-error_log("OLLAMA_MODEL: " . $config['model']);
-
 // leer input
+// file_get_contents('php://input') → lee el body crudo del request como string
+// json_decode(..., true) → convierte el string JSON en array asociativo de PHP
+// $input → ahora contiene los datos enviados desde el frontend
 $input = json_decode(file_get_contents('php://input'), true);
 
 // validar prompt
@@ -36,9 +35,16 @@ if (empty($input['prompt'])) {
     exit;
 }
 
+// validar modelo elegido
+if (empty($input['model'])) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'error' => 'modelo requerido']);
+    exit;
+}
+
 // preparar request para ollama
 $data = [
-    'model' => $config['model'],
+    'model' => $input['model'],
     'prompt' => $input['prompt'],
     'stream' => false,
     'options' => $config['options']
@@ -59,6 +65,10 @@ try {
     // llamar a ollama
     $url = $config['base_url'] . $config['endpoints']['generate'];
 
+    // logs para docker
+    error_log("llamando a url: " . $url);
+    error_log("usando modelo: " . $input['model']);
+
     $response = @file_get_contents($url, false, $context);
 
     if ($response === false) {
@@ -78,6 +88,7 @@ try {
     echo json_encode([
         'success' => true,
         'data' => $result['response'],
+        'model' => $result['model'],
         'error' => null
     ]);
 } catch (Exception $e) {

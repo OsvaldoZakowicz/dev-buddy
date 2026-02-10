@@ -106,9 +106,19 @@ async function loadModels() {
  */
 async function sendMessage() {
   const prompt = chatInput.value.trim();
+  const model = modelSelector.value;
 
   // validar input vacio
-  if (!prompt) return;
+  if (!prompt) {
+    alert('prompt vacio!');
+    return;
+  }
+
+  // validar modelo no seleccionado
+  if (!model) {
+    alert('seleccione un modelo!');
+    return;
+  }
 
   // activar chat
   activateChat(chatOutput, CHAT_ACTIVE_CLASS);
@@ -126,7 +136,10 @@ async function sendMessage() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ prompt }),
+      body: JSON.stringify({
+        prompt: prompt,
+        model: model,
+      }),
     });
 
     const data = await response.json();
