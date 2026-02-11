@@ -4,6 +4,7 @@ import {
   scrollToBottom,
   clearInput,
   addMsgToChat,
+  makeMsg,
 } from './domControl.js';
 
 // API
@@ -13,7 +14,9 @@ const API_MODELS = '/api/models.php';
 // parametros constantes
 const CHAT_ACTIVE_CLASS = 'chat-output--active';
 const QUESTION_CLASS = 'question';
+const QUESTION_TITLE_CLASS = 'question-to';
 const ANSWER_CLASS = 'answer';
+const ANSWER_TITLE_CLASS = 'answer-from';
 const ANSWER_ERROR_CLASS = 'answer error';
 const LOADING_CLASS = 'loading';
 const LOADING_TEXT = 'chambeando ...';
@@ -124,7 +127,7 @@ async function sendMessage() {
   activateChat(chatOutput, CHAT_ACTIVE_CLASS);
 
   // agregar pregunta al chat
-  addQuestionToChat(prompt);
+  addQuestionToChat(prompt, model);
 
   // mostrar indicador de carga
   const loadingId = addLoadingMsgToChat();
@@ -142,16 +145,16 @@ async function sendMessage() {
       }),
     });
 
-    const data = await response.json();
+    const answer = await response.json();
 
     // remover loading
     removeLoadingMsgFromChat(loadingId);
 
     // manejar respuesta
-    if (data.success) {
-      addAnswerToChat(data.data, ANSWER_CLASS);
+    if (answer.success) {
+      addAnswerToChat(answer);
     } else {
-      addErrorMsgToChat(`error: ${data.error}`, ANSWER_ERROR_CLASS);
+      addErrorMsgToChat(`error: ${answer.error}`, ANSWER_ERROR_CLASS);
     }
   } catch (error) {
     removeLoadingMsgFromChat(loadingId);
@@ -166,8 +169,14 @@ async function sendMessage() {
  * agregar prompt realizado por el usuario
  * @param {string} question prompt del usuario
  */
-function addQuestionToChat(question) {
-  addMsgToChat(chatOutput, question, QUESTION_CLASS);
+function addQuestionToChat(question, model) {
+  const msg = makeMsg(question, {
+    msgClasses: [QUESTION_CLASS],
+    isFragmentContent: false,
+    titleClasses: [QUESTION_TITLE_CLASS],
+    titleContent: model,
+  });
+  chatOutput.appendChild(msg);
   clearInput(chatInput);
 }
 
@@ -176,8 +185,14 @@ function addQuestionToChat(question) {
  * @param {*} answer respuesta del modelo
  */
 function addAnswerToChat(answer) {
-  const fragment = parseMarkdownToHtml(answer);
-  addMsgToChat(chatOutput, fragment, ANSWER_CLASS, { isFragment: true });
+  const fragment = parseMarkdownToHtml(answer.data);
+  const msg = makeMsg(fragment, {
+    msgClasses: [ANSWER_CLASS],
+    isFragmentContent: true,
+    titleClasses: [ANSWER_TITLE_CLASS],
+    titleContent: answer.model,
+  });
+  chatOutput.appendChild(msg);
 }
 
 /**

@@ -35,6 +35,36 @@ export function addMsgToChat(chatOutput, content, className, options = {}) {
   return options.id || null;
 }
 
+export function makeMsg(content, options = {}) {
+  const msg = document.createElement('div');
+  msg.classList.add(options.msgClasses);
+  msg.appendChild(
+    makeMsgTitleElement(options.titleClasses, options.titleContent),
+  );
+
+  if (options.isFragmentContent) {
+    msg.appendChild(content);
+  } else {
+    const p = document.createElement('p');
+    p.textContent = content;
+    msg.appendChild(p);
+  }
+
+  return msg;
+}
+
+/**
+ * crear titulo del mensaje para chat
+ * @param {string[]} titleClasses
+ * @param {string} titleContent
+ */
+function makeMsgTitleElement(titleClasses, titleContent) {
+  const span = document.createElement('span');
+  span.classList.add(titleClasses);
+  span.innerText = titleContent;
+  return span;
+}
+
 /**
  * agrega clase CSS con estilos para mostrar el
  * chat como activo al inicio de una conversacion

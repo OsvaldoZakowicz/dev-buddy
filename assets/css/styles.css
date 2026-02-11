@@ -5,6 +5,7 @@
   --deepsea-color-mid-2: #3e5c76;
   --deepsea-color-mid-3: #748cab;
   --deepsea-color-white: #f0ebd8;
+  --color-error: #d32f2f;
 }
 
 * {
@@ -33,7 +34,7 @@ body {
 
 .title-content {
   min-width: 400px;
-  max-width: 950px;
+  max-width: 1200px;
   width: 100%;
   flex-shrink: 0;
   display: flex;
@@ -44,18 +45,18 @@ body {
   margin: 0.3rem;
   letter-spacing: 2px;
   color: var(--deepsea-color-white);
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .title-content .subtitle {
   margin: 0.3rem;
   color: var(--deepsea-color-mid-3);
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 
 .chat-output {
   min-width: 400px;
-  max-width: 950px;
+  max-width: 1200px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -92,7 +93,7 @@ body {
 
 .chat-form {
   min-width: 400px;
-  max-width: 950px;
+  max-width: 1200px;
   width: 100%;
   padding: 0.5rem;
   border-bottom-left-radius: 4px;
@@ -190,7 +191,7 @@ body {
   padding: 0.55rem 0.75rem;
   background-color: var(--deepsea-color-mid-2);
   color: var(--deepsea-color-white);
-  border-radius: 8px 8px 4px 8px;
+  border-radius: 8px 8px 0px 8px;
   font-size: 0.85rem;
   line-height: 1.5;
   word-wrap: break-word;
@@ -198,11 +199,11 @@ body {
 
 .answer {
   align-self: flex-start;
-  max-width: 85%;
+  max-width: 100%;
   padding: 0.55rem 0.75rem;
   background-color: var(--deepsea-color-mid-3);
   color: var(--deepsea-color-dark);
-  border-radius: 8px 8px 8px 4px;
+  border-radius: 8px 8px 8px 0px;
   font-size: 0.85rem;
   line-height: 1.5;
   word-wrap: break-word;
@@ -225,8 +226,42 @@ body {
 }
 
 .error {
-  background-color: #d32f2f !important;
-  color: white !important;
+  background-color: var(--color-error) !important;
+  color: var(--deepsea-color-white) !important;
+}
+
+/* badges diferenciados para pregunta y respuesta */
+.question-to,
+.answer-from {
+  display: inline-block;
+  margin: 0 0 0.5rem 0;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 4px 4px 0 0;
+  line-height: 1.2;
+}
+
+.question-to {
+  background: linear-gradient(135deg, var(--deepsea-color-mid-2), #4a6fa5);
+  color: var(--deepsea-color-white);
+  border-left: 3px solid var(--deepsea-color-mid-3);
+}
+
+.answer-from {
+  background: linear-gradient(135deg, var(--deepsea-color-mid-3), #8fa3c1);
+  color: var(--deepsea-color-dark);
+  border-left: 3px solid var(--deepsea-color-white);
+}
+
+.question-to::before {
+  content: 'P: ';
+  opacity: 0.7;
+}
+
+.answer-from::before {
+  content: 'R: ';
+  opacity: 0.7;
 }
 
 /* parrafos dentro de mensajes */
