@@ -4,40 +4,13 @@
 
 /**
  *
- * @param {Element} chatOutput
- * @param {DocumentFragment|string} content
- * @param {string} className
- * @param {object} options
- * @returns id del mensaje o null
+ * @param {*} content
+ * @param {*} options
+ * @returns
  */
-export function addMsgToChat(chatOutput, content, className, options = {}) {
-  const messageElement = document.createElement('div');
-  messageElement.className = className;
-
-  if (options.id) {
-    messageElement.id = options.id;
-  }
-
-  if (options.isLoading && options.loadingClass) {
-    messageElement.classList.add(options.loadingClass);
-  }
-
-  // determinar si el contenido es texto plano o fragment
-  if (options.isFragment) {
-    messageElement.appendChild(content);
-  } else {
-    messageElement.textContent = content;
-  }
-
-  chatOutput.appendChild(messageElement);
-  scrollToBottom(chatOutput);
-
-  return options.id || null;
-}
-
 export function makeMsg(content, options = {}) {
   const msg = document.createElement('div');
-  msg.classList.add(options.msgClasses);
+  msg.classList.add(...options.msgClasses);
   msg.appendChild(
     makeMsgTitleElement(options.titleClasses, options.titleContent),
   );
@@ -60,9 +33,46 @@ export function makeMsg(content, options = {}) {
  */
 function makeMsgTitleElement(titleClasses, titleContent) {
   const span = document.createElement('span');
-  span.classList.add(titleClasses);
+  span.classList.add(...titleClasses);
   span.innerText = titleContent;
   return span;
+}
+
+/**
+ * crear mensaje de carga
+ * @param {int} loadingId
+ * @param {string[]} loadingClasses
+ * @param {string} loadingTextContent
+ */
+export function makeMsgLoading(loadingId, loadingClasses, loadingTextContent) {
+  const msg = document.createElement('div');
+  msg.id = loadingId;
+  msg.classList.add(...loadingClasses);
+
+  const p = document.createElement('p');
+  p.textContent = loadingTextContent;
+
+  msg.appendChild(p);
+
+  return msg;
+}
+
+/**
+ * crear mensaje de error
+ * @param {string} errorClass
+ * @param {string} errorTextContent
+ * @returns
+ */
+export function makeMsgError(errorClass, errorTextContent) {
+  const msg = document.createElement('div');
+  msg.className = errorClass;
+
+  const p = document.createElement('p');
+  p.textContent = errorTextContent;
+
+  msg.appendChild(p);
+
+  return msg;
 }
 
 /**

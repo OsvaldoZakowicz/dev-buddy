@@ -1,10 +1,10 @@
 import { parseMarkdownToHtml } from './mdParser.js';
 import {
   activateChat,
-  scrollToBottom,
   clearInput,
-  addMsgToChat,
   makeMsg,
+  makeMsgLoading,
+  makeMsgError,
 } from './domControl.js';
 
 // API
@@ -200,7 +200,8 @@ function addAnswerToChat(answer) {
  * @param {string} errorText
  */
 function addErrorMsgToChat(errorText) {
-  addMsgToChat(chatOutput, errorText, ANSWER_ERROR_CLASS);
+  const errorMsg = makeMsgError(ANSWER_ERROR_CLASS, errorText);
+  chatOutput.appendChild(errorMsg);
 }
 
 /**
@@ -209,11 +210,13 @@ function addErrorMsgToChat(errorText) {
  */
 function addLoadingMsgToChat() {
   const id = `loading-${Date.now()}`;
-  return addMsgToChat(chatOutput, LOADING_TEXT, ANSWER_CLASS, {
+  const loadingMsg = makeMsgLoading(
     id,
-    isLoading: true,
-    loadingClass: LOADING_CLASS,
-  });
+    [LOADING_CLASS, ANSWER_CLASS],
+    LOADING_TEXT,
+  );
+  chatOutput.appendChild(loadingMsg);
+  return id;
 }
 
 // remover mensaje por id
