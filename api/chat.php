@@ -42,12 +42,21 @@ if (empty($input['model'])) {
     exit;
 }
 
+// validar keep alive elegido
+$keepAlive = isset($input['keep_alive']) ? (int)$input['keep_alive'] : 180;
+if ($keepAlive < 0 || $keepAlive > 600) {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'error' => 'keep alive no soportado']);
+    exit;
+}
+
 // preparar request para ollama
 $data = [
     'model' => $input['model'],
     'prompt' => $input['prompt'],
+    'keep_alive' => $keepAlive,
+    'options' => $config['options'],
     'stream' => false,
-    'options' => $config['options']
 ];
 
 // configurar contexto http
