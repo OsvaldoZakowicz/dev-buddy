@@ -27,6 +27,7 @@ const chatInput = document.querySelector('.chat-input');
 const chatBtnSend = document.querySelector('.btn-send');
 const chatOutput = document.querySelector('.chat-output');
 const modelSelector = document.getElementById('model-selector');
+const keepAliveSelector = document.getElementById('keep-alive-selector');
 
 // prevenir submit default y manejar envio
 chatForm.addEventListener('submit', async (e) => {
@@ -56,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
 /**
  * carga la lista de modelos disponibles desde ollama
  * y popula el select
- * * ver listener al final del archivo
  */
 async function loadModels() {
   try {
@@ -110,6 +110,7 @@ async function loadModels() {
 async function sendMessage() {
   const prompt = chatInput.value.trim();
   const model = modelSelector.value;
+  const keepAlive = keepAliveSelector.value;
 
   // validar input vacio
   if (!prompt) {
@@ -142,6 +143,7 @@ async function sendMessage() {
       body: JSON.stringify({
         prompt: prompt,
         model: model,
+        keep_alive: parseInt(keepAlive),
       }),
     });
 

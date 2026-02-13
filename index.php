@@ -26,10 +26,19 @@
     <form class="chat-form">
       <textarea class="chat-input" placeholder="¿C&oacute;mo puedo ayudarte hoy?" rows="2"></textarea>
       <div class="chat-controls">
-        <!-- select de modelos aqui -->
-        <select class="model-selector" id="model-selector" disabled>
-          <option value="">cargando modelos...</option>
-        </select>
+        <div class="control-group">
+          <select class="selector" id="model-selector" title="modelos" disabled>
+            <option value="">cargando modelos...</option>
+          </select>
+          <select class="selector" id="keep-alive-selector" title="keep alive del modelo">
+            <option value="0">liberar inmediatamente</option>
+            <option value="18">18 segundos</option>
+            <option value="60">1 minuto</option>
+            <option value="180" selected>3 minutos (recomendado)</option>
+            <option value="300">5 minutos</option>
+            <option value="600">10 minutos</option>
+          </select>
+        </div>
         <button class="btn btn-send">
           enviar
           <img src="./assets/icons/send.svg" alt="" width="16px" height="16px">

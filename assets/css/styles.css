@@ -125,7 +125,15 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
   padding-top: 0.5rem;
+}
+
+.control-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
 }
 
 .btn {
@@ -153,8 +161,8 @@ body {
   background-color: var(--deepsea-color-mid-2);
 }
 
-/* select de modelos */
-.model-selector {
+/* selects */
+.selector {
   min-width: 200px;
   padding: 4px 8px;
   font-size: 0.85rem;
@@ -165,22 +173,22 @@ body {
   cursor: pointer;
 }
 
-.model-selector:hover:not(:disabled) {
+.selector:hover:not(:disabled) {
   border-color: var(--deepsea-color-mid-3);
 }
 
-.model-selector:focus {
+.selector:focus {
   outline: none;
   border-color: var(--deepsea-color-mid-3);
 }
 
-.model-selector:disabled {
+.selector:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
 /* opciones del select (algunos navegadores lo permiten) */
-.model-selector option {
+.selector option {
   background-color: var(--deepsea-color-mid-1);
   color: var(--deepsea-color-white);
 }
