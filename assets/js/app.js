@@ -5,6 +5,7 @@ import {
   makeMsg,
   makeMsgLoading,
   makeMsgError,
+  makeIndicator,
 } from './domControl.js';
 
 // API
@@ -29,6 +30,15 @@ const chatOutput = document.querySelector('.chat-output');
 const modelSelector = document.getElementById('model-selector');
 const keepAliveSelector = document.getElementById('keep-alive-selector');
 
+// contador de requests pendientes
+let pendingRequests = 0;
+
+// documento cargado y listo para obtener modelos
+document.addEventListener('DOMContentLoaded', () => {
+  loadModels();
+  setupUnloadProtection();
+});
+
 // prevenir submit default y manejar envio
 chatForm.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -47,11 +57,6 @@ chatInput.addEventListener('keydown', async (e) => {
 chatBtnSend.addEventListener('click', async (e) => {
   e.preventDefault();
   await sendMessage();
-});
-
-// documento cargado y listo para obtener modelos
-document.addEventListener('DOMContentLoaded', () => {
-  loadModels();
 });
 
 /**
@@ -133,6 +138,8 @@ async function sendMessage() {
   // mostrar indicador de carga
   const loadingId = addLoadingMsgToChat();
 
+  incrementPendingRequests();
+
   try {
     // llamar a la api
     const response = await fetch(API, {
@@ -164,6 +171,8 @@ async function sendMessage() {
       `error de conexion: ${error.message}`,
       ANSWER_ERROR_CLASS,
     );
+  } finally {
+    decrementPendingRequests();
   }
 }
 
@@ -226,4 +235,58 @@ function removeLoadingMsgFromChat(id) {
   if (!id) return;
   const el = document.getElementById(id);
   if (el) el.remove();
+}
+
+// ----------------------------------------------------------------------
+// gestion de indicador de requests pendientes a modelos
+// comportamiento al intentar recargar pagina durante requests pendientes
+
+/**
+ * configurar proteccion contra recarga accidental
+ * nota: los navegadores modernos muestran un mensaje generico
+ * los mensajes personalizados fueron deprecados por seguridad
+ */
+function setupUnloadProtection() {
+  window.addEventListener('beforeunload', (e) => {
+    if (pendingRequests > 0) {
+      e.preventDefault();
+      e.returnValue = ''; // requerido para chrome/edge
+      return ''; // fallback para navegadores antiguos
+    }
+  });
+}
+
+function incrementPendingRequests() {
+  pendingRequests++;
+  updatePendingIndicator();
+}
+
+function decrementPendingRequests() {
+  pendingRequests = Math.max(0, pendingRequests - 1);
+  updatePendingIndicator();
+}
+
+/**
+ * actualizar o crear un indicador de request pendiente
+ * y agegarlo al dom
+ */
+function updatePendingIndicator() {
+  const existingIndicator = document.getElementById('pending-indicator');
+
+  if (pendingRequests > 0) {
+    if (!existingIndicator) {
+      const indicator = makeIndicator(
+        'pending-indicator',
+        'pending-indicator',
+        `procesando: ${pendingRequests}`,
+      );
+      document.body.appendChild(indicator);
+    } else {
+      indicator.textContent = `procesando: ${pendingRequests}`;
+    }
+  } else {
+    if (existingIndicator) {
+      existingIndicator.remove();
+    }
+  }
 }

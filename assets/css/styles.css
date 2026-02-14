@@ -6,6 +6,7 @@
   --deepsea-color-mid-3: #748cab;
   --deepsea-color-white: #f0ebd8;
   --color-error: #d32f2f;
+  --color-warning: #d97706;
 }
 
 * {
@@ -221,6 +222,21 @@ body {
   font-style: italic;
   opacity: 0.7;
   animation: pulse 1.5s ease-in-out infinite;
+}
+
+.pending-indicator {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--color-warning);
+  color: var(--deepsea-color-white);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: pulse 2s ease-in-out infinite;
 }
 
 @keyframes pulse {

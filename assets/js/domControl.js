@@ -76,6 +76,26 @@ export function makeMsgError(errorClass, errorTextContent) {
 }
 
 /**
+ *
+ * @param {string} indicatorId
+ * @param {string} indicatorClass
+ * @param {string} indicatorTextContent
+ * @returns
+ */
+export function makeIndicator(
+  indicatorId,
+  indicatorClass,
+  indicatorTextContent,
+) {
+  const indicator = document.createElement('div');
+  indicator.id = indicatorId;
+  indicator.className = indicatorClass;
+  indicator.textContent = indicatorTextContent;
+
+  return indicator;
+}
+
+/**
  * agrega clase CSS con estilos para mostrar el
  * chat como activo al inicio de una conversacion
  * @param {Element} chatOutput elemento html que representa el chat
