@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../config/ollama.php';
+
 // headers para json y cors
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
@@ -21,8 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
 }
 
 // cargar configuracion
-// NOTA: __DIR__ es variable magica que contiene el directorio actual
-$config = require __DIR__ . '/../config/ollama.php';
+$config = getOllamaConfig();
 
 // construir url para listar modelos
 $url = $config['base_url'] . $config['endpoints']['tags'];

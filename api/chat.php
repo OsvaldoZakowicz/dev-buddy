@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../config/ollama.php';
 
 // headers para json y cors
 header('Content-Type: application/json');
@@ -20,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // cargar configuracion
-$config = require __DIR__ . '/../config/ollama.php';
+$config = getOllamaConfig();
 
 // leer input
 // file_get_contents('php://input') → lee el body crudo del request como string
@@ -76,7 +77,7 @@ try {
 
     // logs para docker
     error_log("llamando a url: " . $url);
-    error_log("usando modelo: " . $input['model']);
+    error_log("usando modelo: " . $input['model'] . " - timeout: " . $config['timeout'] . " - keep alive: " . $keepAlive);
 
     $response = @file_get_contents($url, false, $context);
 
