@@ -6,6 +6,10 @@ import {
   makeMsgLoading,
   makeMsgError,
   makeIndicator,
+  hiddeLogoElement,
+  changeTitleContainerDirection,
+  reduceTitleTextSize,
+  reduceSubTitleTextSize,
 } from './domControl.js';
 
 // API
@@ -13,6 +17,10 @@ const API = '/api/chat.php';
 const API_MODELS = '/api/models.php';
 
 // parametros constantes
+const LOGO_HIDDEN_CLASS = 'logo-container--hidden';
+const TITLE_CONTAINER_CLASS = 'title-container--sm';
+const TITLE_SM_CLASS = 'title--sm';
+const SUBTITLE_SM_CLASS = 'subtitle--sm';
 const CHAT_ACTIVE_CLASS = 'chat-output--active';
 const QUESTION_CLASS = 'question';
 const QUESTION_TITLE_CLASS = 'question-to';
@@ -23,6 +31,10 @@ const LOADING_CLASS = 'loading';
 const LOADING_TEXT = 'chambeando ...';
 
 // elementos del dom
+const logoContainer = document.querySelector('.logo-container');
+const titleContainer = document.querySelector('.title-container');
+const title = document.querySelector('.title');
+const subtitle = document.querySelector('.subtitle');
 const chatForm = document.querySelector('.chat-form');
 const chatInput = document.querySelector('.chat-input');
 const chatBtnSend = document.querySelector('.btn-send');
@@ -131,6 +143,13 @@ async function sendMessage() {
 
   // activar chat
   activateChat(chatOutput, CHAT_ACTIVE_CLASS);
+  // ocultar logo devbuddy
+  hiddeLogoElement(logoContainer, LOGO_HIDDEN_CLASS);
+  // cambiar direccion del contenedor de titulos
+  changeTitleContainerDirection(titleContainer, TITLE_CONTAINER_CLASS);
+  // reducir tamaño de textos
+  reduceTitleTextSize(title, TITLE_SM_CLASS);
+  reduceSubTitleTextSize(subtitle, SUBTITLE_SM_CLASS);
 
   // agregar pregunta al chat
   addQuestionToChat(prompt, model);

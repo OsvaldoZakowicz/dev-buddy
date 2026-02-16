@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./assets/icons/devbuddy.ico" type="image/x-icon">
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +17,15 @@
 <body>
     <main class="container">
         <!-- titulo -->
-        <section class="title-content">
-            <h1 class="title">DevBuddy</h1>
-            <span class="subtitle">Tu compañero de programaci&oacute;n!</span>
-        </section>
+        <header class="header">
+            <div class="logo-container">
+                <img class="logo" src="./assets/img/devbuddy-logo-optimized.png" alt="devbuddy logo">
+            </div>
+            <div class="title-container">
+                <h1 class="title">DevBuddy</h1>
+                <span class="subtitle">Tu compañero de programaci&oacute;n!</span>
+            </div>
+        </header>
         <!-- contenido de chat, salida del prompt -->
         <section class="chat-output"></section>
         <!-- entrada de prompt -->
@@ -27,10 +33,10 @@
             <textarea class="chat-input" placeholder="¿C&oacute;mo puedo ayudarte hoy?" rows="2"></textarea>
             <div class="chat-controls">
                 <div class="control-group">
-                    <select class="selector" id="model-selector" title="modelos" disabled>
+                    <select class="selector" id="model-selector" title="modelos instalados en ollama" disabled>
                         <option value="">cargando modelos...</option>
                     </select>
-                    <select class="selector" id="keep-alive-selector" title="keep alive del modelo">
+                    <select class="selector" id="keep-alive-selector" title="¿cuanto tiempo mantener el modelo en ram luego de la respuesta?">
                         <option value="0">liberar inmediatamente</option>
                         <option value="18">18 segundos</option>
                         <option value="60">1 minuto</option>
