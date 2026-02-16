@@ -17,11 +17,20 @@ DevBuddy es un asistente de programación conversacional que te permite interact
 
 ## Funcionalidades
 
-- ✅ Chat conversacional con modelos de IA locales
-- ✅ Selección dinámica de modelos instalados
-- ✅ Interfaz responsive con paleta DeepSea
-- ✅ Detección automática de modelos disponibles en Ollama
-- ✅ Sin tracking, sin costos, sin límites de uso
+✅ Chat conversacional con modelos de IA locales
+✅ Selección dinámica de modelos instalados
+✅ Interfaz responsive con paleta DeepSea
+✅ Detección automática de modelos disponibles en Ollama
+✅ Sin tracking, sin costos, sin límites de uso
+
+## Requisitos
+
+Tener instalado:
+
+- Docker Engine 20.10+
+- Docker Compose 2.0+
+
+**Nota:** Si tenés Ollama instalado localmente, debés detenerlo antes de levantar DevBuddy (`systemctl stop ollama` o `brew services stop ollama`) para evitar conflictos en el puerto 11434.
 
 ## Configuración
 
@@ -50,4 +59,4 @@ docker exec -it dev-buddy-ollama ollama pull qwen2.5-coder:3b
 
 5. Accede a la interfaz: http://localhost:9092
 
-y listo... :D
+y listo :D
