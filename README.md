@@ -10,18 +10,18 @@ DevBuddy es un asistente de programación conversacional que te permite interact
 
 ## Tecnologías
 
-- **Frontend:** HTML5, CSS3 vanilla, JavaScript ES6+
+- **Frontend:** HTML5, CSS3, JavaScript ES6+ vanilla
 - **Backend:** PHP 8.3
-- **IA:** Ollama (soporta qwen2.5-coder, deepseek-coder, codellama, etc.)
+- **IA:** Ollama como motor de IA local
 - **Infraestructura:** Docker, Docker Compose
 
 ## Funcionalidades
 
-✅ Chat conversacional con modelos de IA locales
-✅ Selección dinámica de modelos instalados
-✅ Interfaz responsive con paleta DeepSea
-✅ Detección automática de modelos disponibles en Ollama
-✅ Sin tracking, sin costos, sin límites de uso
+- ✅ Chat conversacional con modelos de IA locales
+- ✅ Selección dinámica de modelos instalados
+- ✅ Interfaz responsive con paleta DeepSea
+- ✅ Detección automática de modelos disponibles en Ollama
+- ✅ Sin tracking, sin costos, sin límites de uso
 
 ## Requisitos
 
